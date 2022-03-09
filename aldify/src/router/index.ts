@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Main from "@/views/Main.vue";
 
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Home,
-  // },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    props: route => ({ search: route.query.search }),
+  },
   // {
   //   path: "/about",
   //   name: "About",

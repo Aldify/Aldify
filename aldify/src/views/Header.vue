@@ -1,6 +1,7 @@
 <template lang="pug">
 .grid.grid-cols-4
-  img(src="@/assets/logo.png")
+  router-link(:to="{ name: 'home' }")
+    img(src="@/assets/logo.png")
   c-music-badge.my-auto(
     :play-progress=`{
         image: 'https://i.scdn.co/image/ab67616d0000b2738a11818dd00b24effd1545f4',
