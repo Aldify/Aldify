@@ -1,7 +1,7 @@
 <template lang="pug">
 .grid.root-grid-rows.h-screen
   c-header.bg-gray-800.text-gray-100
-  router-view.m-5
+  router-view
 </template>
 
 <script lang="ts">
