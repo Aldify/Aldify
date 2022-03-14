@@ -10,10 +10,12 @@ import {
   faPlay,
   faForwardStep,
   faMagnifyingGlass,
+  faPause,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBackwardStep);
 library.add(faPlay);
+library.add(faPause);
 library.add(faForwardStep);
 library.add(faMagnifyingGlass);
 

@@ -1,15 +1,11 @@
 <template lang="pug">
 .m-5
-  div(v-if="search")
-      .mx-auto
-          c-song-card.my-3(v-for="song of songs" :song="song")
-  div(v-else)
-      .flex.justify-center
-          button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 0 ? 'bg-gray-200' : ''" @click="Select(0)") Songs
-          button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 1 ? 'bg-gray-200' : ''" @click="Select(1)") Albums
-          button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 2 ? 'bg-gray-200' : ''" @click="Select(2)") Artists
-      .mx-auto
-          c-song-card.my-3(v-for="song of songs" :song="song")
+  .flex.justify-center(v-if="!search")
+      button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 0 ? 'bg-gray-200' : ''" @click="select(0)") Songs
+      button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 1 ? 'bg-gray-200' : ''" @click="select(1)") Albums
+      button.text-gray-700.rounded-lg.py-1.px-3.mx-2.hover-bg-gray-100(:class="selectedIndex == 2 ? 'bg-gray-200' : ''" @click="select(2)") Artists
+  .mx-auto
+      c-song-card.my-3(v-for="song of songs" :song="song" @click="play(song)")
 </template>
 
 <script lang="ts">
@@ -18,6 +14,7 @@ import BadgeButton from "@/components/BadgeButton.vue";
 import Card from "@/components/Card.vue";
 import { fetchAllSongs, fetchSongs } from "@/requests";
 import { Song } from "@/models/song";
+import { player } from "@/player";
 
 export default defineComponent({
   name: "Main",
@@ -39,11 +36,14 @@ export default defineComponent({
     this.loadSongs(to.query.search as string);
   },
   methods: {
-    Select(index: number) {
+    select(index: number) {
       this.selectedIndex = index;
     },
     async loadSongs(search: string) {
       this.songs = await fetchSongs(search ? search : "*");
+    },
+    play(song: Song) {
+      player.load(song);
     },
   },
 });
