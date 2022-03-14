@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Main from "@/views/Main.vue";
+import Landing from "@/views/Landing.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: Main,
-    props: route => ({ search: route.query.search }),
+    props: (route) => ({ search: route.query.search }),
+  },
+  {
+    path: "/",
+    name: "landing",
+    component: Landing,
   },
   // {
   //   path: "/about",
