@@ -1,8 +1,9 @@
 <template lang="pug">
 div
   .bg-gray-100.rounded-full.inline.py-1.px-3
-    input.bg-transparent.text-black.focus-outline-none(placeholder="Search")
-  font-awesome-icon.reverse.ml-2(:icon="['fas', 'magnifying-glass']")
+    input.bg-transparent.text-black.focus-outline-none(placeholder="Search" v-model="searchText")
+  button(@click="search")
+    font-awesome-icon.reverse.ml-2(:icon="['fas', 'magnifying-glass']")
 </template>
 
 <script lang="ts">
@@ -10,6 +11,14 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Search",
+  data() {
+      return {searchText: ""};
+  },
+  methods: {
+      search() {
+          this.$router.push({ name: "home", query: { search: this.searchText }})
+      }
+  }
 });
 </script>
 
