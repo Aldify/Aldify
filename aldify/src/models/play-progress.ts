@@ -6,4 +6,6 @@ export interface PlayProgress {
   artist: string;
 
   progress: number;
+
+  playing: boolean;
 }

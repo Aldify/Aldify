@@ -2,12 +2,8 @@
 .grid.grid-cols-4
   router-link(:to="{ name: 'home' }")
     img(src="@/assets/logo.png")
-  c-music-badge.my-auto(
-    :play-progress=`{
-        image: 'https://i.scdn.co/image/ab67616d0000b2738a11818dd00b24effd1545f4',
-        title: 'Midnight City',
-        artist: 'M83',
-        progress: 0.66 }`)
+  .my-auto
+    c-music-badge(v-if="hasPlayed" :key="progressKey" :play-progress="playProgress")
   c-search.my-auto
   .my-auto
     c-rounded-button Sign Up
@@ -19,6 +15,9 @@ import { defineComponent } from "vue";
 import MusicBadge from "@/components/MusicBadge.vue";
 import Search from "@/components/Search.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
+import { player } from "@/player";
+
+let intervalHandle = 0;
 
 export default defineComponent({
   name: "Header",
@@ -26,6 +25,29 @@ export default defineComponent({
     "c-music-badge": MusicBadge,
     "c-search": Search,
     "c-rounded-button": RoundedButton,
+  },
+  data() {
+    return {
+      // Force component render when progress is updated. Vue doesn't detect
+      // changes because the playProgress reference stays constant but its
+      // sub-properties are changed (re-assigning the variable doesn't fix
+      // this either because the reference is still the same).
+      progressKey: 0,
+      playProgress: player.state(),
+      hasPlayed: false,
+    };
+  },
+  mounted() {
+    intervalHandle = setInterval(this.update, 1000);
+  },
+  unmounted() {
+    clearInterval(intervalHandle);
+  },
+  methods: {
+    update() {
+      this.hasPlayed = player.hasPlayed();
+      this.progressKey += 1;
+    },
   },
 });
 </script>
