@@ -1,11 +1,11 @@
 <template lang="pug">
-.grid.grid-cols-4
+.grid.grid-cols-4.header-border
   router-link(:to="{ name: 'home' }")
-    img(src="@/assets/logo.png")
+    img.h-24.p-4(src="@/assets/logo.svg")
   .my-auto
     c-music-badge(v-if="hasPlayed" :key="progressKey" :play-progress="playProgress")
   c-search.my-auto
-  .my-auto
+  .my-auto.text-right.mr-5
     c-rounded-button Sign Up
     c-rounded-button.bg-gray-400 Login
 </template>
@@ -51,3 +51,8 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="stylus" scoped>
+.header-border
+  border-bottom-left-radius: 50px
+</style>
